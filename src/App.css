@@ -22,6 +22,32 @@
   font-size: large;
 }
 
+.nav-bar-img{
+  max-height: 40px;
+  max-width: 40px;
+}
+.img-prin {
+  margin-top: 40px;
+  max-height: 190px;
+  max-width: 190px;
+}
+
+#footer{
+  font-size: .8em;
+  color: #3f51b5;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.equipo-info{
+  margin-left: 60px;
+  margin-right: 60px;
+  display: flex;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
