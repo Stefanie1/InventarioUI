@@ -29,18 +29,35 @@ class FormEliminar extends Component {
             });
         alert(this.state.inventario);
     };
+
+    getUser = () => {
+        var getCookieValues = function (cookie) {
+            var cookieArray = cookie.split('=');
+            return cookieArray[1].trim();
+        };
+
+        var getCookieNames = function (cookie) {
+            var cookieArray = cookie.split('=');
+            return cookieArray[0].trim();
+        };
+
+        var cookies = document.cookie.split(';');
+        var cookieValue = cookies.map(getCookieValues)[cookies.map(getCookieNames).indexOf('user')];
+
+        return (cookieValue === undefined) ? null : cookieValue;
+    }
+
     eliminarEquipo=(clic) =>{
         clic.preventDefault();
         this.setState({ open: true });
         console.log(this.state.inventario);
-        fetch('http://localhost:7050/eliminarEquipo?inventario=' + this.state.inventario)
+        var user = this.getUser();
+        fetch('http://localhost:7050/eliminarEquipo?inventario=' + this.state.inventario + "&user="+ user)
             .then(respuesta => respuesta)
             .catch(function (error) {
                 console.log('Request failed', error);
             });
         this.setState({data: null})
-
-
     }
 
     handleClick = () => {

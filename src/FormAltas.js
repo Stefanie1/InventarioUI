@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import Chip from 'material-ui/Chip';
 
 
 const tipos = [
@@ -64,7 +65,7 @@ const marc = [
         label: 'Mac',
     },
     {
-        value: 'Generica',
+        value: 'Generico',
         label: 'Generica',
     }
 ];
@@ -103,47 +104,47 @@ const estat = [
 ];
 const aul = [
     {
-        value: 'Aúla 1',
+        value: 'Aula 1',
         label: 'Aúla 1',
     },
     {
-        value: 'Aúla 2',
+        value: 'Aula 2',
         label: 'Aúla 2',
     },
     {
-        value: 'Aúla 3',
+        value: 'Aula 3',
         label: 'Aúla 3',
     },
     {
-        value: 'Aúla 4',
+        value: 'Aula 4',
         label: 'Aúla 4',
     },
     {
-        value: 'Aúla 5',
+        value: 'Aula 5',
         label: 'Aúla 5',
     },
     {
-        value: 'Aúla 6',
+        value: 'Aula 6',
         label: 'Aúla 6',
     },
     {
-        value: 'Aúla 7',
+        value: 'Aula 7',
         label: 'Aúla 7',
     },
     {
-        value: 'Aúla 8',
+        value: 'Aula 8',
         label: 'Aúla 8',
     },
     {
-        value: 'Aúla 9',
+        value: 'Aula 9',
         label: 'Aúla 9',
     },
     {
-        value: 'Multimedia 1',
+        value: 'Aula Multimedia 1',
         label: 'Multimedia 1',
     },
     {
-        value: 'Multimedia 2',
+        value: 'Aula Multimedia 2',
         label: 'Multimedia 2',
     },
     {
@@ -177,44 +178,49 @@ class FormAltas extends Component {
         numSerie: '',
         numInventario: '',
         estatus: '',
-        observaciones:'',
-        open:false,
-        mensaje:''
+        observaciones: '',
+        open: false,
+        mensaje: ''
     }
-
-    saveEquipo = name => event => {
-        console.log("Call save Equipo");
-        console.log(event.target.value);
-        console.log(name);
-        this.setState({
-            [name]: event.target.value,
-        });
-    };
 
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        this.setState({ open: false });
+        this.setState({open: false});
     };
+
+    getUser = () => {
+        var getCookieValues = function (cookie) {
+            var cookieArray = cookie.split('=');
+            return cookieArray[1].trim();
+        };
+
+        var getCookieNames = function (cookie) {
+            var cookieArray = cookie.split('=');
+            return cookieArray[0].trim();
+        };
+
+        var cookies = document.cookie.split(';');
+        var cookieValue = cookies.map(getCookieValues)[cookies.map(getCookieNames).indexOf('user')];
+
+        return (cookieValue === undefined) ? null : cookieValue;
+    }
 
 
     registroEquipo = (e) => {
         e.preventDefault();
-        console.log("Call registroEquipo");
-        console.log(this.state.equipo);
-        console.log(this.state.numInventario);
 
         var equipo = {
             "equipo": this.state.equipo,
             "numInventario": this.state.numInventario,
             "numSerie": this.state.numSerie,
-            "marca":this.state.marca,
-            "estatus":this.state.estatus,
-            "sede":this.state.sede,
-            "aula":this.state.aula,
-            "observaciones":this.state.observaciones,
+            "marca": this.state.marca,
+            "estatus": this.state.estatus,
+            "sede": this.state.sede,
+            "aula": this.state.aula,
+            "observaciones": this.state.observaciones,
+            "user": this.getUser(),
         }
         fetch('http://localhost:7050/equipoInfo', {
             method: 'POST',
@@ -223,13 +229,13 @@ class FormAltas extends Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                this.setState({data: data, open: true, mensaje:data.mensaje });
+                this.setState({data: data, open: true, mensaje: data.mensaje});
             })
             .catch(function (error) {
                 console.log('Request failed', error);
             });
 
-        this.setState ({
+        this.setState({
             equipo: '',
             sede: '',
             marca: '',
@@ -237,9 +243,10 @@ class FormAltas extends Component {
             numSerie: '',
             numInventario: '',
             estatus: '',
-            observaciones:''
+            observaciones: ''
         });
     };
+
     handleChange = name => event => {
         event.preventDefault();
         this.setState({
@@ -250,8 +257,6 @@ class FormAltas extends Component {
     render() {
         return (
             <div>
-                {/*<BotonFormulario equipo={this.state.equipo} registroEquipo={this.registroEquipo}/>*/}
-
                 <TextField
                     id="select-currency"
                     select
@@ -273,6 +278,7 @@ class FormAltas extends Component {
                     label="Número de inventario"
                     value={this.state.numInventario}
                     type="search"
+                    helperText="Por favor ingrese el numero"
                     required={true}
                     onChange={this.handleChange('numInventario')}
                     margin="normal"
@@ -282,6 +288,7 @@ class FormAltas extends Component {
                     label="Número de serie "
                     value={this.state.numSerie}
                     type="search"
+                    helperText="Por favor ingrese el numero"
                     onChange={this.handleChange('numSerie')}
                     margin="normal"
                 />
@@ -336,7 +343,7 @@ class FormAltas extends Component {
                 <TextField
                     id="select-currency"
                     select
-                    label="Aula"
+                    label="Aúla"
                     value={this.state.aula}
                     onChange={this.handleChange('aula')}
                     helperText="Por favor seleccione una opción"
@@ -361,20 +368,33 @@ class FormAltas extends Component {
                     margin="normal"
                 />
 
-
-
-
-
                 <Button raised color="primary" onClick={this.registroEquipo.bind(this)}>
                     <Done/>
                     guardar
                 </Button>
+
+
+                {(this.state.data != null) && (
+                    <div className='equipo-info'>
+                        <Chip label={this.state.data.equipo}/>
+                        <Chip label={this.state.data.numInventario}/>
+                        <Chip label={this.state.data.numSerie}/>
+                        <Chip label={this.state.data.marca}/>
+                        <Chip label={this.state.data.sede}/>
+                        <Chip label={this.state.data.aula}/>
+                        <Chip label={this.state.data.estatus}/>
+                        <Chip label={this.state.data.observaciones}/>
+                    </div>
+                )}
+
                 <Button raised color="primary" onClick={function (event) {
                     window.location = '/'
                 }}>
                     <Done/>
                     Regresar
                 </Button>
+
+
 
                 <div>
                     <Snackbar
@@ -399,7 +419,7 @@ class FormAltas extends Component {
                                 color="inherit"
                                 onClick={this.handleClose}
                             >
-                                <CloseIcon />
+                                <CloseIcon/>
                             </IconButton>,
                         ]}
                     />

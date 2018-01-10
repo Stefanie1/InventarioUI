@@ -10,31 +10,31 @@ import CloseIcon from 'material-ui-icons/Close';
 
 const buscarPor = [
     {
-        value: 'Equipo',
+        value: 'equipo',
         label: 'Equipo',
     },
     {
-        value: 'Numero de Serie',
+        value: 'numSerie',
         label: 'Numero de Serie',
     },
     {
-        value: 'Numero de Inventario',
+        value: 'numInventario',
         label: 'Numero de Inventario',
     },
     {
-        value: 'Sede',
+        value: 'sede',
         label: 'Sede',
     },
     {
-        value: 'Aula',
+        value: 'aula',
         label: 'Aula',
     },
     {
-        value: 'Marca',
+        value: 'marca',
         label: 'Marca',
     },
     {
-        value: 'Estatus',
+        value: 'estatus',
         label: 'Estatus',
     }
 ]
@@ -101,11 +101,11 @@ const marc = [
 
 const sed = [
     {
-        value: 'Nuevo León',
+        value: 'Nuevo Leon ',
         label: 'Nuevo León',
     },
     {
-        value: 'Ciudad Universitaría',
+        value: 'ciudad universiatria',
         label: 'Ciudad Universitaría',
     },
     {
@@ -133,39 +133,39 @@ const estat = [
 ];
 const aul = [
     {
-        value: 'Aúla 1',
+        value: 'Aula 1',
         label: 'Aúla 1',
     },
     {
-        value: 'Aúla 2',
+        value: 'Aula 2',
         label: 'Aúla 2',
     },
     {
-        value: 'Aúla 3',
+        value: 'Aula 3',
         label: 'Aúla 3',
     },
     {
-        value: 'Aúla 4',
+        value: 'Aula 4',
         label: 'Aúla 4',
     },
     {
-        value: 'Aúla 5',
+        value: 'Aula 5',
         label: 'Aúla 5',
     },
     {
-        value: 'Aúla 6',
+        value: 'Aula 6',
         label: 'Aúla 6',
     },
     {
-        value: 'Aúla 7',
+        value: 'Aula 7',
         label: 'Aúla 7',
     },
     {
-        value: 'Aúla 8',
+        value: 'Aula 8',
         label: 'Aúla 8',
     },
     {
-        value: 'Aúla 9',
+        value: 'Aula 9',
         label: 'Aúla 9',
     },
     {
@@ -211,6 +211,7 @@ class FormConsultas extends Component {
         mensaje: '',
         show: false,
         buscarPor: '',
+        equipos: null,
     }
 
     saveEquipo = name => event => {
@@ -233,19 +234,12 @@ class FormConsultas extends Component {
 
     consultaEquipo = (e) => {
         e.preventDefault();
-        console.log("Call registroEquipo");
-        console.log(this.state.equipo);
-        console.log(this.state.numInventario);
 
         var equipo = {
-            "equipo": this.state.equipo,
-            "numInventario": this.state.numInventario,
-            "numSerie": this.state.numSerie,
-            "marca": this.state.marca,
-            "estatus": this.state.estatus,
-            "sede": this.state.sede,
-            "aula": this.state.aula,
+            "buscarPor": this.state.buscarPor,
+            "valor": this.state[this.state.buscarPor],
         }
+
         fetch('http://localhost:7050/consultarEquipo', {
             method: 'POST',
             body: JSON.stringify(equipo)
@@ -253,7 +247,7 @@ class FormConsultas extends Component {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                this.setState({data: data, open: true, mensaje: data.mensaje, show: true});
+                this.setState({equipos: data, open: true, mensaje: data.mensaje, show: true});
             })
             .catch(function (error) {
                 console.log('Request failed', error);
@@ -279,7 +273,6 @@ class FormConsultas extends Component {
     render() {
         return (
             <div>
-                {/*<BotonFormulario equipo={this.state.equipo} registroEquipo={this.registroEquipo}/>*/}
                 {this.state.buscarPor == '' && (
                     <TextField
                         id="select-currency"
@@ -298,7 +291,7 @@ class FormConsultas extends Component {
                         ))}
                     </TextField>)}
 
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Equipo' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'equipo' && (
                     <TextField
                         id="select-currency"
                         select
@@ -316,7 +309,7 @@ class FormConsultas extends Component {
                         ))}
                     </TextField>
                 )}
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Numero de Inventario' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'numInventario' && (
                     <TextField
                         id="search"
                         label="Número de inventario"
@@ -327,7 +320,7 @@ class FormConsultas extends Component {
                         margin="normal"
                     />)}
 
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Numero de Serie' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'numSerie' && (
                     <TextField
                         id="search"
                         label="Número de serie "
@@ -336,7 +329,7 @@ class FormConsultas extends Component {
                         onChange={this.handleChange('numSerie')}
                         margin="normal"
                     />)}
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Marca' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'marca' && (
                     <TextField
                         id="select-marca"
                         select
@@ -354,7 +347,7 @@ class FormConsultas extends Component {
                     </TextField>)}
 
 
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Estatus' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'estatus' && (
                     <TextField
                         id="select-estatus"
                         select
@@ -371,7 +364,7 @@ class FormConsultas extends Component {
                         ))}
                     </TextField>)}
 
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Sede' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'sede' && (
                     <TextField
                         id="select-currency"
                         select
@@ -388,7 +381,7 @@ class FormConsultas extends Component {
                         ))}
                     </TextField>)}
 
-                {this.state.buscarPor != '' && this.state.buscarPor == 'Aula' && (
+                {this.state.buscarPor != '' && this.state.buscarPor == 'aula' && (
                     <TextField
                         id="select-currency"
                         select
@@ -413,7 +406,7 @@ class FormConsultas extends Component {
                 </Button>
 
                 {this.state.show && (
-                    <Equipos/>
+                    <Equipos equipos={this.state.equipos}/>
                 )}
 
                 {this.state.buscarPor != '' && (
@@ -431,41 +424,11 @@ class FormConsultas extends Component {
                     Regresar
                 </Button>
 
-                <div>
-                    <Snackbar
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                        open={this.state.open}
-                        autoHideDuration={6000}
-                        onClose={this.handleClose}
-                        SnackbarContentProps={{
-                            'aria-describedby': 'message-id',
-                        }}
-                        message={<span id="message-id">{this.state.mensaje}</span>}
-                        action={[
-                            <Button key="undo" color="accent" dense onClick={this.handleClose}>
-                                Cerrar
-                            </Button>,
-                            <IconButton
-                                key="close"
-                                aria-label="Close"
-                                color="inherit"
-                                onClick={this.handleClose}
-                            >
-                                <CloseIcon/>
-                            </IconButton>,
-                        ]}
-                    />
-                </div>
-
                 <p id='footer'> stefanie.c@gmail.com </p>
             </div>
 
         )
     }
 }
-
 
 export default FormConsultas;
