@@ -4,9 +4,34 @@ import Equipos from './Equipos'
 import Done from 'material-ui-icons/Done';
 import MenuItem from 'material-ui/Menu/MenuItem';
 import TextField from 'material-ui/TextField';
-import Snackbar from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
+import {withStyles} from "material-ui/styles/index";
+import PropTypes from 'prop-types';
+
+
+const styles = theme => ({
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: '1.8em',
+        marginTop: '2%',
+        width: 280,
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        'justify-content': 'center',
+    },
+    button:{
+        margin: theme.spacing.unit,
+        marginTop: '3%',
+    },
+    chip:{
+        display: 'flex',
+        'justify-content': 'center',
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        marginTop: '3%',
+    }
+});
 
 const buscarPor = [
     {
@@ -271,6 +296,7 @@ class FormConsultas extends Component {
     };
 
     render() {
+        const {classes} = this.props;
         return (
             <div>
                 {this.state.buscarPor == '' && (
@@ -279,6 +305,7 @@ class FormConsultas extends Component {
                         select
                         label="Buscar Por "
                         value={this.state.buscarPor}
+                        className={classes.textField}
                         onChange={this.handleChange('buscarPor')}
                         required={true}
                         fullWidth
@@ -400,35 +427,37 @@ class FormConsultas extends Component {
 
 
                 <br></br>
-                <Button raised color="primary" onClick={this.consultaEquipo}>
+                <Button raised color="primary" className={classes.button} onClick={this.consultaEquipo}>
                     <Done/>
                     Consultar
                 </Button>
 
                 {this.state.show && (
-                    <Equipos equipos={this.state.equipos}/>
+                    <Equipos className={classes.container} equipos={this.state.equipos}/>
                 )}
 
                 {this.state.buscarPor != '' && (
-                    <Button raised color="primary" onClick={function (event) {
+                    <Button raised color="primary" className={classes.button} onClick={function (event) {
                         window.location = '/formconsultas'
                     }}>
                         <Done/>
                         Buscar por..
                     </Button>
                 )}
-                <Button raised color="primary" onClick={function (event) {
+                <Button raised color="primary" className={classes.button} onClick={function (event) {
                     window.location = '/'
                 }}>
                     <Done/>
                     Regresar
                 </Button>
-
-                <p id='footer'> stefanie.c@gmail.com </p>
             </div>
 
         )
     }
 }
 
-export default FormConsultas;
+FormConsultas.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(FormConsultas);

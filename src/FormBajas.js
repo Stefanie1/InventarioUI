@@ -6,6 +6,34 @@ import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import {withStyles} from "material-ui/styles/index";
+import PropTypes from 'prop-types';
+
+
+const styles = theme => ({
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: '1.8em',
+        marginTop: '2%',
+        width: 250,
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        'justify-content': 'center',
+    },
+    button:{
+        margin: theme.spacing.unit,
+        marginTop: '13%',
+    },
+    chip:{
+        display: 'flex',
+        'justify-content': 'center',
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        marginTop: '3%',
+    }
+});
 
 class FormEliminar extends Component {
 
@@ -27,7 +55,6 @@ class FormEliminar extends Component {
             .catch(function (error) {
                 console.log('Request failed', error);
             });
-        alert(this.state.inventario);
     };
 
     getUser = () => {
@@ -72,14 +99,17 @@ class FormEliminar extends Component {
         this.setState({ open: false });
     };
     render() {
+        const {classes} = this.props;
+
         return (
             <div>
-                <form onSubmit={this.handleClickOpen.bind(this)}>
+                <form onSubmit={this.handleClickOpen.bind(this)} >
                     <TextField
                         id="search"
                         label="Número de inventario"
                         type="search"
                         margin="normal"
+                        className={classes.textField}
                         value={this.state.inventario}
                         required={true}
                         onChange={e => this.setState({inventario: e.target.value})}
@@ -92,22 +122,22 @@ class FormEliminar extends Component {
 
 
                 {(this.state.data != null) && (
-                <div className='equipo-info'>
-                    <Chip label={this.state.data.equipo}/>
-                    <Chip label={this.state.data.numInventario}/>
-                    <Chip label={this.state.data.numSerie}/>
-                    <Chip label={this.state.data.marca}/>
-                    <Chip label={this.state.data.sede}/>
-                    <Chip label={this.state.data.aula}/>
-                    <Chip label={this.state.data.estatus}/>
-                    <Chip label={this.state.data.observaciones}/>
+                <div className='equipo-info' className={classes.container}>
+                    <Chip className={classes.chip} label={this.state.data.equipo}/>
+                    <Chip className={classes.chip} label={this.state.data.numInventario}/>
+                    <Chip className={classes.chip} label={this.state.data.numSerie}/>
+                    <Chip className={classes.chip} label={this.state.data.marca}/>
+                    <Chip className={classes.chip} label={this.state.data.sede}/>
+                    <Chip className={classes.chip} label={this.state.data.aula}/>
+                    <Chip className={classes.chip} label={this.state.data.estatus}/>
+                    <Chip className={classes.chip} label={this.state.data.observaciones}/>
                 </div>
                 )}
-                <Button raised color="primary" onClick={this.eliminarEquipo.bind(this)}>
+                <Button raised color="primary" className={classes.button} onClick={this.eliminarEquipo.bind(this)}>
                     <Done/>
                     eliminar
                 </Button>
-                <Button raised color="primary" onClick={function (event) {
+                <Button raised color="primary" className={classes.button} onClick={function (event) {
                     window.location = '/'
                 }}>
                     <Done/>
@@ -151,4 +181,8 @@ class FormEliminar extends Component {
     }
 }
 
-export default FormEliminar;
+FormEliminar.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(FormEliminar);

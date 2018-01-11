@@ -9,6 +9,7 @@ import FormEliminar from './FormBajas'
 import FormAltas from './FormAltas'
 import FormConsultas from './FormConsultas'
 import FormModificar from './FormModificar'
+import FormPermisos from './FormPermisos'
 
 class App extends Component {
     render() {
@@ -23,6 +24,7 @@ class App extends Component {
                     <Route exact path="/formaltas" component={FormAltas}/>
                     <Route exact path="/formconsultas" component={FormConsultas}/>
                     <Route exact path="/formmodificaciónes" component={FormModificar}/>
+                    <Route exact path="/formpermisos" component={FormPermisos}/>
                 </div>
             </BrowserRouter>
         );

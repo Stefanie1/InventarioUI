@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import logo from './unam7.png';
-import CampoTexto from './CampoTexto'
+import CampoTexto from './CampoTextoRegitro'
 import Button from 'material-ui/Button';
 import Done from 'material-ui-icons/Done';
 
@@ -16,11 +16,10 @@ class Registro extends Component {
                 <p className="App-intro">
                     Registrarse
                 </p>
-                <CampoTexto/>
-                <Button raised color="primary">
-                    <Done/>
-                    Registrarse
-                </Button>
+                <CampoTexto mensaje={'Registro'}/>
+
+                <br></br>
+                <a className='link tiny-link' href='/login'>¿Tienes una cuenta?</a>
                 <p id='footer'> stefanie.c@gmail.com </p>
             </div>
         )

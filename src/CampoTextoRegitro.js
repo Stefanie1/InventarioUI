@@ -35,16 +35,15 @@ class TextFields extends React.Component {
         }
         console.log(values);
 
-        fetch('http://localhost:7050/login', {
+        fetch('http://localhost:7050/signup', {
             method: 'POST',
             body: JSON.stringify(values)
         })
-            .then(res => res.json())
+            .then(res => res)
             .then(data => {
                 console.log(data);
-                document.cookie='user='+data.usuario;
-                document.cookie='rol='+data.rol;
-                window.location = '/';
+
+                    window.location = '/login';
                 this.setState({data: data, open: true, mensaje: data.mensaje});
             })
             .catch(function (error) {

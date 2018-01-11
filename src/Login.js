@@ -3,9 +3,11 @@ import logo from './unam7.png';
 import CampoTexto from './CampoTexto'
 import Button from 'material-ui/Button';
 import Done from 'material-ui-icons/Done';
+import TextField from 'material-ui/TextField';
 
 
 class Login extends Component {
+
     render() {
         return(
             < div>
@@ -16,11 +18,10 @@ class Login extends Component {
                 <p className="App-intro">
                     Iniciar Sesión
                 </p>
-                <CampoTexto/>
-                <Button raised color="primary">
-                    <Done/>
-                    Iniciar Sesión
-                </Button>
+                <CampoTexto mensaje={'Iniciar Sesión'}/>
+
+                <br></br>
+                <a className='link tiny-link' href='/'>Continue without signing in</a>
                 <p id='footer'> stefanie.c@gmail.com </p>
 
             </div>

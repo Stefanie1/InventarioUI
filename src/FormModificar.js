@@ -7,6 +7,39 @@ import MenuItem from 'material-ui/Menu/MenuItem';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import {withStyles} from "material-ui/styles/index";
+import PropTypes from 'prop-types';
+
+
+const styles = theme => ({
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: '1.8em',
+        marginTop: '2%',
+        width: 280,
+    },
+    container: {
+        margin: 'auto',
+        width: '80%',
+        padding: '1px',
+    },
+    observaciones: {
+        marginLeft: 'auto',
+        width: '90%',
+        adding: '1px',
+    },
+    button:{
+        margin: theme.spacing.unit,
+        marginTop: '3%',
+    },
+    chip:{
+        display: 'flex',
+        'justify-content': 'center',
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        marginTop: '3%',
+    }
+});
 
 
 const sed = [
@@ -145,7 +178,7 @@ class FormModificar extends Component{
             .catch(function (error) {
                 console.log('Request failed', error);
             });
-        alert(this.state.inventario);
+
     };
 
 
@@ -212,6 +245,7 @@ class FormModificar extends Component{
 
 
     render(){
+        const {classes} = this.props;
         return(
             <div>
                 <form onSubmit={this.handleClickOpen.bind(this)}>
@@ -221,6 +255,7 @@ class FormModificar extends Component{
                         type="search"
                         margin="normal"
                         value={this.state.inventario}
+                        className={classes.textField}
                         required={true}
                         onChange={e => this.setState({inventario: e.target.value})}
                     />
@@ -231,18 +266,20 @@ class FormModificar extends Component{
                 </form>
 
 
+                <div className={classes.container}>
                 {(this.state.data != null) && (
                     <div className='equipo-info'>
-                        <Chip label={this.state.data.equipo}/>
-                        <Chip label={this.state.data.numInventario}/>
-                        <Chip label={this.state.data.numSerie}/>
-                        <Chip label={this.state.data.marca}/>
-                        <Chip label={this.state.data.sede}/>
-                        <Chip label={this.state.data.aula}/>
-                        <Chip label={this.state.data.estatus}/>
-                        <Chip label={this.state.data.observaciones}/>
+                        <Chip className={classes.chip} label={this.state.data.equipo}/>
+                        <Chip className={classes.chip} label={this.state.data.numInventario}/>
+                        <Chip className={classes.chip} label={this.state.data.numSerie}/>
+                        <Chip className={classes.chip} label={this.state.data.marca}/>
+                        <Chip className={classes.chip} label={this.state.data.sede}/>
+                        <Chip className={classes.chip} label={this.state.data.aula}/>
+                        <Chip className={classes.chip} label={this.state.data.estatus}/>
+                        <Chip className={classes.chip} label={this.state.data.observaciones}/>
                     </div>
                 )}
+                </div>
 
 
                 <br></br>
@@ -252,6 +289,7 @@ class FormModificar extends Component{
                     select
                     label="Estatus"
                     value={this.state.estatus}
+                    className={classes.textField}
                     onChange={this.handleChange('estatus')}
                     helperText="Por favor seleccione una opción"
                     margin="normal"
@@ -267,6 +305,7 @@ class FormModificar extends Component{
                     select
                     label="Sede"
                     value={this.state.sede}
+                    className={classes.textField}
                     onChange={this.handleChange('sede')}
                     helperText="Por favor seleccione una opción"
                     margin="normal"
@@ -282,6 +321,7 @@ class FormModificar extends Component{
                     select
                     label="Aula"
                     value={this.state.aula}
+                    className={classes.textField}
                     onChange={this.handleChange('aula')}
                     helperText="Por favor seleccione una opción"
                     margin="normal"
@@ -300,19 +340,18 @@ class FormModificar extends Component{
                     placeholder="Observaciones"
                     helperText="Por favor escriba sus obseravaciones"
                     value={this.state.observaciones}
+                    className={classes.observaciones}
                     fullWidth
                     onChange={this.handleChange('observaciones')}
                     margin="normal"
                 />
 
-                <Button raised color="primary" onClick={this.modificar}>
+                <Button raised color="primary" className={classes.button} onClick={this.modificar}>
                     <Done/>
                     modificar
                 </Button>
-                <br></br>
-                <br></br>
 
-                <Button raised color="primary"  onClick={function(event) {window.location = '/'}}>
+                <Button raised color="primary" className={classes.button}  onClick={function(event) {window.location = '/'}}>
                     <Done/>
                     Regresar
                 </Button>
@@ -351,4 +390,8 @@ class FormModificar extends Component{
     }
 }
 
-export default FormModificar;
+FormModificar.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(FormModificar);

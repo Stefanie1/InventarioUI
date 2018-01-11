@@ -7,7 +7,37 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Chip from 'material-ui/Chip';
+import {withStyles} from "material-ui/styles/index";
+import PropTypes from 'prop-types';
 
+
+const styles = theme => ({
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    observaciones: {
+        marginLeft: 'auto',
+        width: '90%',
+        adding: '1px',
+    },
+    container: {
+        margin: 'auto',
+        width: '80%',
+        padding: '1px',
+    },
+    button: {
+        margin: theme.spacing.unit,
+        marginTop: '3%',
+    },
+    chip: {
+        display: 'flex',
+        'justify-content': 'center',
+        margin: theme.spacing.unit,
+        marginTop: '1%',
+    }
+});
 
 const tipos = [
     {
@@ -211,6 +241,10 @@ class FormAltas extends Component {
     registroEquipo = (e) => {
         e.preventDefault();
 
+        if (this.getUser() === null || this.state.equipo === '' || this.state.numInventario === '' || this.state.numSerie === '' || this.state.marca === '' || this.state.estatus === '' || this.state.sede === '' || this.state.aula === '') {
+            return;
+        }
+
         var equipo = {
             "equipo": this.state.equipo,
             "numInventario": this.state.numInventario,
@@ -255,12 +289,15 @@ class FormAltas extends Component {
     };
 
     render() {
+        const {classes} = this.props;
+
         return (
             <div>
                 <TextField
                     id="select-currency"
                     select
                     label="Equipo "
+                    className={classes.textField}
                     value={this.state.equipo}
                     onChange={this.handleChange('equipo')}
                     required={true}
@@ -277,6 +314,7 @@ class FormAltas extends Component {
                     id="search"
                     label="Número de inventario"
                     value={this.state.numInventario}
+                    className={classes.textField}
                     type="search"
                     helperText="Por favor ingrese el numero"
                     required={true}
@@ -287,6 +325,7 @@ class FormAltas extends Component {
                     id="search"
                     label="Número de serie "
                     value={this.state.numSerie}
+                    className={classes.textField}
                     type="search"
                     helperText="Por favor ingrese el numero"
                     onChange={this.handleChange('numSerie')}
@@ -298,6 +337,7 @@ class FormAltas extends Component {
                     select
                     label="Marca "
                     value={this.state.marca}
+                    className={classes.textField}
                     onChange={this.handleChange('marca')}
                     helperText="Por favor seleccione una opción "
                     margin="normal"
@@ -314,6 +354,7 @@ class FormAltas extends Component {
                     select
                     label="Estatus"
                     value={this.state.estatus}
+                    className={classes.textField}
                     onChange={this.handleChange('estatus')}
                     helperText="Por favor seleccione una opción"
                     margin="normal"
@@ -330,6 +371,7 @@ class FormAltas extends Component {
                     select
                     label="Sede"
                     value={this.state.sede}
+                    className={classes.textField}
                     onChange={this.handleChange('sede')}
                     helperText="Por favor seleccione una opción"
                     margin="normal"
@@ -345,6 +387,7 @@ class FormAltas extends Component {
                     select
                     label="Aúla"
                     value={this.state.aula}
+                    className={classes.textField}
                     onChange={this.handleChange('aula')}
                     helperText="Por favor seleccione una opción"
                     margin="normal"
@@ -363,28 +406,33 @@ class FormAltas extends Component {
                     placeholder="Observaciones"
                     helperText="Por favor escriba sus obseravaciones"
                     value={this.state.observaciones}
+                    className={classes.observaciones}
                     fullWidth
                     onChange={this.handleChange('observaciones')}
                     margin="normal"
                 />
 
-                <Button raised color="primary" onClick={this.registroEquipo.bind(this)}>
+                <Button raised color="primary" className={classes.button} onClick={this.registroEquipo.bind(this)}>
                     <Done/>
                     guardar
                 </Button>
 
 
                 {(this.state.data != null) && (
-                    <div className='equipo-info'>
-                        <Chip label={this.state.data.equipo}/>
-                        <Chip label={this.state.data.numInventario}/>
-                        <Chip label={this.state.data.numSerie}/>
-                        <Chip label={this.state.data.marca}/>
-                        <Chip label={this.state.data.sede}/>
-                        <Chip label={this.state.data.aula}/>
-                        <Chip label={this.state.data.estatus}/>
-                        <Chip label={this.state.data.observaciones}/>
-                    </div>
+                <div className={classes.container}>
+                    {(this.state.data != null) && (
+                        <div className='equipo-info'>
+                            <Chip className={classes.chip} label={this.state.data.equipo}/>
+                            <Chip className={classes.chip} label={this.state.data.numInventario}/>
+                            <Chip className={classes.chip} label={this.state.data.numSerie}/>
+                            <Chip className={classes.chip} label={this.state.data.marca}/>
+                            <Chip className={classes.chip} label={this.state.data.sede}/>
+                            <Chip className={classes.chip} label={this.state.data.aula}/>
+                            <Chip className={classes.chip} label={this.state.data.estatus}/>
+                            <Chip className={classes.chip} label={this.state.data.observaciones}/>
+                        </div>
+                    )}
+                </div>
                 )}
 
                 <Button raised color="primary" onClick={function (event) {
@@ -393,7 +441,6 @@ class FormAltas extends Component {
                     <Done/>
                     Regresar
                 </Button>
-
 
 
                 <div>
@@ -424,6 +471,7 @@ class FormAltas extends Component {
                         ]}
                     />
                 </div>
+
                 <p id='footer'> stefanie.c@gmail.com </p>
             </div>
 
@@ -431,5 +479,8 @@ class FormAltas extends Component {
     }
 }
 
+FormAltas.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
 
-export default FormAltas;
+export default withStyles(styles)(FormAltas);
