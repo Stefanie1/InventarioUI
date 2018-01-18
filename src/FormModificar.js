@@ -44,7 +44,7 @@ const styles = theme => ({
 
 const sed = [
     {
-        value: 'Nuevo León',
+        value: 'Nuevo Leon',
         label: 'Nuevo León',
     },
     {
@@ -355,7 +355,7 @@ class FormModificar extends Component{
                     <Done/>
                     Regresar
                 </Button>
-                    <p id='footer'> stefanie.c@gmail.com </p>
+                    <p id='footer'> MDTI. Alfonso Gutiérrez Molina amolina@unam.mx </p>
 
                 <div>
                     <Snackbar

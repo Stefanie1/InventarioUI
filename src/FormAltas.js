@@ -472,7 +472,7 @@ class FormAltas extends Component {
                     />
                 </div>
 
-                <p id='footer'> stefanie.c@gmail.com </p>
+                <p id='footer'> MDTI. Alfonso Gutiérrez Molina amolina@unam.mx </p>
             </div>
 
         )
